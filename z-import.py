@@ -37,8 +37,11 @@ if __name__ == "__main__":
 	cur.execute("USE QQQA")
 	
 	#create tables based on XXX.xlsx
-	create_tables_based_on_excel_book(cur,str(sys.argv[1]))
-	
+	try:
+		create_tables_based_on_excel_book(cur,str(sys.argv[1]))
+	except IndexError:
+		print("usage:z-import.py <inputfilename.xlsx>")
+		
 	#close cursor
 	cur.close()
 	#conn_rollback
