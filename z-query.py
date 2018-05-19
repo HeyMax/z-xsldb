@@ -4,9 +4,14 @@ import xlrd
 import sys
 import pymysql
 
-def query_from_mysql(cur,target_str):
-	#fetching result
-	query_nrow = cur.execute("select Question,Answer from `QA` where Question like '%{}%'".format(target_str))
+def query_from_mysql(cur,keywords):
+	#multiKeywords
+	query_exe = "select Question,Answer from `QA` where concat(Question,',',Answer) like '%{}%'".format(keywords[1])
+	if len(keywords) > 2:
+		for keyword in range(2,len(keywords)):
+			query_exe = query_exe + " and concat(Question,',',Answer) like '%{}%'".format(keywords[keyword])
+	#fetching result	
+	query_nrow = cur.execute(query_exe)
 	query_result = cur.fetchall()
 	#formatting it
 	for row in query_result:
@@ -21,11 +26,13 @@ if __name__ == '__main__':
 	cur = conn.cursor
 	#create cursor
 	cur = conn.cursor()
+	#use DB QQQA
 	cur.execute("USE QQQA")
 	
 	#query QA from table`QA`
 	try:
-		if not query_from_mysql(cur,str(sys.argv[1])):
+		#str(sys.argv[1]).split()
+		if not query_from_mysql(cur,sys.argv):
 			print("暂无相关信息")
 	except IndexError:
 		print("usage:z-query.py <inputfilename.xlsx>")
