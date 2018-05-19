@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
+from __future__ import unicode_literals
 import xlrd
 import sys
 import pymysql
@@ -31,12 +32,12 @@ def query_from_mysql(keywords):
 		answer = row[1]
 		inventroy['Q:'] = "Q:{}\n".format(question) 
 		inventroy['A:'] = "A:{}\n".format(answer)
-		inventroy_js = json.dumps(inventroy)
+		inventroy_js = json.dumps(inventroy,ensure_ascii=False)
 		print(inventroy)
 		inventories.append(inventroy_js)
 	print("\n共计{}个结果".format(str(query_nrow)))
-	return_result = [inventories,json.dumps({'count':query_nrow})]
-	print(return_result)
+	return_result = [inventories,json.dumps({'count':query_nrow},ensure_ascii=False)]
+	#print(return_result)
 	#close cursor
 	cur.close()
 	#conn_rollback
