@@ -10,7 +10,7 @@ import json
 		
 app = Flask(__name__)
 
-@app.route('/result/', methods=['POST'])
+@app.route('/result/', methods=['POST'], strict_slashes=False)
 def query():
 	query_result = query_from_mysql(request.form.get('keywords'))#json.loads(keywords, object_hook=JSONObject).keywords
 	rst = make_response(query_result)
