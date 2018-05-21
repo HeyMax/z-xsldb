@@ -8,6 +8,7 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 axios.defaults.withCredentials = true
+
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(Element)

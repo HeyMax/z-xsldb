@@ -5,10 +5,14 @@
       <el-input class="text" v-model="keywords" placeholder="key words" @keyup.enter="query" clearable></el-input>
       <el-button type="primary" @click="query">搜索</el-button>
     </div>
-    <div class="details">共查询到{{ size }}条记录</div>
+    <div class="details">共查询到 {{ size }} 条记录</div>
     <div class="response">
       <ul>
-        <li ></li>
+        <li v-for="item in results" :key="item.Q">
+          <h1>{{item.question}}</h1>
+          <h2>{{item.answer}}</h2>
+        </li>
+
       </ul>
     </div>
   </div>
@@ -21,7 +25,8 @@ export default {
     return {
       msg: 'qq群问题搜索',
       keywords: '',
-      size: 0
+      size: 0,
+      results: []
     }
   },
   methods: {
@@ -29,11 +34,26 @@ export default {
       // if (this.keywords === '') {
       //   alert('请输入查询关键字!')
       // }
-      this.$http.get('http://172.31.251.31:9999/').then(Response => {
+      // let url = 'http://172.20.16.160:7878/result/'
+      // let url1 = 'http://172.31.251.31:8080'
+      let form = {
+        'keywords': ['cpu']
+      }
+      console.log(form)
+
+      this.$http.post('http://172.20.16.160:7878', form).then(Response => {
         let data = Response.data
+        console.log(data)
         if (data.error_status === 1) {
         } else {
           this.size = data.inventories.length
+          this.results = data.inventories
+          let qa = {'question': '', 'answer': ''}
+          for (let i = 0; i < this.size; i++) {
+            qa.question = data.inventories[i].Q
+            qa.answer = data.inventories[i].A
+            this.results.push(qa)
+          }
         }
       })
     }
