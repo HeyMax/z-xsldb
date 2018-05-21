@@ -15,9 +15,9 @@ def query_from_mysql(keywords):
 	cur.execute("USE QQQA")
 	
 	#multiKeywords
-	query_exe = "select Question,Answer from `QA` where concat(Question,',',Answer) like '%{}%'".format(keywords[1])
-	if len(keywords) > 2:
-		for keyword in range(2,len(keywords)):
+	query_exe = "select Question,Answer from `QA` where concat(Question,',',Answer) like '%{}%'".format(keywords[0])
+	if len(keywords) > 1:
+		for keyword in range(1,len(keywords)):
 			query_exe = query_exe + " and concat(Question,',',Answer) like '%{}%'".format(keywords[keyword])
 	
 	#fetching result	
@@ -32,9 +32,9 @@ def query_from_mysql(keywords):
 		answer = row[1]
 		inventroy['Q'] = "Q:{}\n".format(question) 
 		inventroy['A'] = "A:{}\n".format(answer)
-		inventroy_js = json.dumps(inventroy,ensure_ascii=False)
+		#inventroy_js = json.dumps(inventroy,ensure_ascii=False)
 		print(inventroy)
-		inventories.append(inventroy_js)
+		inventories.append(inventroy)
 	print("\n共计{}个结果".format(str(query_nrow)))
 	if query_nrow :
 		error_status = 0
@@ -52,4 +52,4 @@ def query_from_mysql(keywords):
 	return return_result
 	
 if __name__ == '__main__':
-	query_from_mysql(sys.argv)
+	query_from_mysql()
