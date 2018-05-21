@@ -1,85 +1,16 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+    <h2 class="title">{{ msg }}</h2>
+    <div class="input">
+      <el-input class="text" v-model="keywords" placeholder="key words" @keyup.enter="query" clearable></el-input>
+      <el-button type="primary" @click="query">搜索</el-button>
+    </div>
+    <div class="details">共查询到{{ size }}条记录</div>
+    <div class="response">
+      <ul>
+        <li ></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -88,26 +19,36 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'qq群问题搜索',
+      keywords: '',
+      size: 0
+    }
+  },
+  methods: {
+    query: function () {
+      // if (this.keywords === '') {
+      //   alert('请输入查询关键字!')
+      // }
+      this.$http.get('http://172.31.251.31:9999/').then(Response => {
+        let data = Response.data
+        if (data.error_status === 1) {
+        } else {
+          this.size = data.inventories.length
+        }
+      })
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style lang="stylus" rel="stylesheet/stylus">
+.hello
+  .title
+    font-size 0px
+  .input
+    display inline-block
+    align center
+    .text
+      width 500px
+      height 30px
 </style>

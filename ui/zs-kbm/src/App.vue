@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img src="http://www.zstack.io/templets/default/images/top/Logo_Horizontal_addtitle.png">
     <router-view/>
   </div>
 </template>
