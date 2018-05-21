@@ -30,8 +30,8 @@ def query_from_mysql(keywords):
 		inventroy = {}
 		question = row[0]
 		answer = row[1]
-		inventroy['Q:'] = "Q:{}\n".format(question) 
-		inventroy['A:'] = "A:{}\n".format(answer)
+		inventroy['Q'] = "Q:{}\n".format(question) 
+		inventroy['A'] = "A:{}\n".format(answer)
 		inventroy_js = json.dumps(inventroy,ensure_ascii=False)
 		print(inventroy)
 		inventories.append(inventroy_js)
