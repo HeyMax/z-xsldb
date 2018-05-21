@@ -24,7 +24,7 @@ def query_from_mysql(keywords):
 	query_nrow = cur.execute(query_exe)
 	query_result = cur.fetchall()
 	inventories = []
-	
+	error_status = 0
 	#formatting it
 	for row in query_result:
 		inventroy = {}
@@ -36,7 +36,9 @@ def query_from_mysql(keywords):
 		print(inventroy)
 		inventories.append(inventroy_js)
 	print("\n共计{}个结果".format(str(query_nrow)))
-	return_result = [inventories,json.dumps({'count':query_nrow},ensure_ascii=False)]
+	if query_nrow :
+		error_status = 1
+	return_result = json.dumps({'error_status':error_status,'inventories':inventories},ensure_ascii=False)
 	#print(return_result)
 	#close cursor
 	cur.close()
