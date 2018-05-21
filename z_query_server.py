@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import make_response
 from z_query import query_from_mysql
+from flask import request
 import json
 
 # class JSONObject:
@@ -9,9 +10,9 @@ import json
 		
 app = Flask(__name__)
 
-@app.route('/result/<keywords>')
-def query(keywords):
-	query_result = query_from_mysql(keywords)#json.loads(keywords, object_hook=JSONObject).keywords
+@app.route('/result/', methods=['POST'])
+def query():
+	query_result = query_from_mysql(request.form.get('keywords'))#json.loads(keywords, object_hook=JSONObject).keywords
 	rst = make_response(query_result)
 	rst.headers['Access-Control-Allow-Origin'] = '*'
 	return rst, 200
