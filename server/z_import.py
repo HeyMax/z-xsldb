@@ -5,13 +5,6 @@ import sys
 import pymysql
 	
 def create_table_based_on_excel_book(cur,path):
-	#establish connection
-	conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='Dw199719',db='QQQA',charset='utf8')
-	#create cursor
-	cur = conn.cursor()
-	#use DB QQQA
-	cur.execute("USE QQQA")
-	
 	try:
 		book = xlrd.open_workbook(path)
 	except IndexError:
@@ -37,7 +30,12 @@ def create_table_based_on_excel_book(cur,path):
 			cur.execute(row_insert,sqlstr[:3])
 			
 if __name__ == "__main__":
-
+	#establish connection
+	conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='Dw199719',db='QQQA',charset='utf8')
+	#create cursor
+	cur = conn.cursor()
+	#use DB QQQA
+	cur.execute("USE QQQA")
 	
 	#create table based on XXX.xlsx
 	try:
