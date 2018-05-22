@@ -3,7 +3,7 @@
 import xlrd
 import sys
 import pymysql
-	
+
 def create_table_based_on_excel_book(cur,path):
 	try:
 		book = xlrd.open_workbook(path)
