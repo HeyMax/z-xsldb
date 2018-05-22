@@ -9,7 +9,7 @@ import json
 def query_from_mysql(keywords):
 	conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='Dw199719',db='QQQA',charset='utf8')
 	cur = conn.cursor
-		#create cursor
+	#create cursor
 	cur = conn.cursor()
 	#use DB QQQA
 	cur.execute("USE QQQA")
@@ -30,8 +30,8 @@ def query_from_mysql(keywords):
 		inventroy = {}
 		question = row[0]
 		answer = row[1]
-		inventroy['Q'] = "Q:{}\n".format(question) 
-		inventroy['A'] = "A:{}\n".format(answer)
+		inventroy['Q'] = "{}\n".format(question) 
+		inventroy['A'] = "{}\n".format(answer)
 		#inventroy_js = json.dumps(inventroy,ensure_ascii=False)
 		print(inventroy)
 		inventories.append(inventroy)
