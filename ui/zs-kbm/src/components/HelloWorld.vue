@@ -2,7 +2,7 @@
   <div class="hello">
     <h2 class="title">{{ msg }}</h2>
     <div class="input">
-      <el-input class="text" v-model="keywords" placeholder="关键字,以','隔开" @keyup.enter="query" clearable></el-input>
+      <el-input class="text" v-model="keywords" placeholder="关键字,以','隔开" @keyup.enter.native="query" clearable></el-input>
       <el-button type="primary" @click="query">搜索</el-button>
     </div>
     <div class="details">关于 {{ this.keywords }} 共查询到 {{ size }} 条记录</div>
@@ -47,6 +47,13 @@ export default {
       results: [],
       support: false,
       help: false
+    }
+  },
+  watch: {
+    keywords: function (val, oldval) {
+      this.size = 0
+      this.results = []
+      this.help = false
     }
   },
   methods: {
