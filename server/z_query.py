@@ -6,19 +6,12 @@ import sys
 import pymysql
 import json
 
-def query_from_mysql(keywords):
-	conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='Dw199719',db='QQQA',charset='utf8')
-	cur = conn.cursor
+def query_from_mysql(dbname, query_exe, fields):
+	conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='Dw199719',charset='utf8')
 	#create cursor
 	cur = conn.cursor()
 	#use DB QQQA
-	cur.execute("USE QQQA")
-	
-	#multiKeywords
-	query_exe = "select Question,Answer from `QA` where concat(Question,',',Answer) like '%{}%'".format(keywords[0])
-	if len(keywords) > 1:
-		for keyword in range(1,len(keywords)):
-			query_exe = query_exe + " and concat(Question,',',Answer) like '%{}%'".format(keywords[keyword])
+	cur.execute("USE " + dbname)
 	
 	#fetching result	
 	query_nrow = cur.execute(query_exe)
@@ -28,10 +21,8 @@ def query_from_mysql(keywords):
 	#formatting it
 	for row in query_result:
 		inventroy = {}
-		question = row[0]
-		answer = row[1]
-		inventroy['Q'] = "{}\n".format(question) 
-		inventroy['A'] = "{}\n".format(answer)
+		for index in range(len(fileds)):
+			inventroy[fields[index]] = "{}\n".format(row[index])
 		#inventroy_js = json.dumps(inventroy,ensure_ascii=False)
 		print(inventroy)
 		inventories.append(inventroy)
