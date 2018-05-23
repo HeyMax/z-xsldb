@@ -21,7 +21,7 @@ def query_from_mysql(dbname, query_exe, fields):
 	#formatting it
 	for row in query_result:
 		inventroy = {}
-		for index in range(len(fileds)):
+		for index in range(len(fields)):
 			inventroy[fields[index]] = "{}\n".format(row[index])
 		#inventroy_js = json.dumps(inventroy,ensure_ascii=False)
 		print(inventroy)
