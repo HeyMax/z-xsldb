@@ -21,7 +21,7 @@
           </el-row>
         </div>
     </div>
-    <span @click="showImg" class="help">救救孩子</span>
+    <span v-show="help" @click="showImg" class="help">救救孩子</span>
     <transition name="fade">
       <div v-show="support" class="detail">
         <div class="detail-wrapper clearfix">
@@ -45,12 +45,14 @@ export default {
       keywords: '',
       size: 0,
       results: [],
-      support: false
+      support: false,
+      help: false
     }
   },
   methods: {
     query: function () {
       if (this.keywords === '') {
+        this.help = false
         alert('请输入查询关键字!')
       } else {
         let form = {
@@ -62,6 +64,7 @@ export default {
             this.size = 0
             alert('未查询到数据')
           } else {
+            this.help = true
             this.size = data.inventories.length
             this.results = data.inventories
           }
